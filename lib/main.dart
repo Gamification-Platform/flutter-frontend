@@ -5,6 +5,8 @@ import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+import 'Screens/login_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -22,8 +24,9 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: kDarkPrimaryColor,
           primaryColor: Colors.deepPurple.shade100,
     ),
-    home: //MobileScreenLayout()
-      MobileScreenLayout()
+    home:// MobileScreenLayout()
+      LoginScreen()
+
     );
   }
 }

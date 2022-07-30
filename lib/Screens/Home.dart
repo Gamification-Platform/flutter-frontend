@@ -1,5 +1,6 @@
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/EventCard.dart';
+import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -41,28 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        centerTitle: false,
-        title: const Text(
-          'BU Play',
-          style: TextStyle(
-            fontSize: 20,
-            color: kDarkPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: kDarkPrimaryColor,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+    return DefaultScaffold(
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(10),

@@ -1,3 +1,4 @@
+import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class LeaderBoardScreen extends StatefulWidget {
@@ -10,8 +11,10 @@ class LeaderBoardScreen extends StatefulWidget {
 class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('LeaderBoardScreen'),
+    return DefaultScaffold(
+      body: Container(
+        child: Text('LeaderBoardScreen'),
+      ),
     );
   }
 }

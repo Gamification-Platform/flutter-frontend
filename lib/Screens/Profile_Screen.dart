@@ -1,4 +1,5 @@
 import 'package:BUPLAY/Screens/EditProfile.dart';
+import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/XP_bar.dart';
 import 'package:BUPLAY/utils/colors.dart';
 import 'package:BUPLAY/utils/utils.dart';
@@ -46,8 +47,8 @@ showDialogBox2(BuildContext context) {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return
+       DefaultScaffold(
         body: SingleChildScrollView(
           child: Container(
             alignment: Alignment.topCenter,
@@ -205,8 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -243,5 +243,6 @@ class FieldBox extends StatelessWidget {
         ],
       ),
     );
+
   }
 }
