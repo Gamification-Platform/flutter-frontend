@@ -1,3 +1,4 @@
+import 'package:BUPLAY/http/auth_http.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:flutter/material.dart';
 
@@ -58,9 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(5),
                   child: ElevatedButton(
                     child: const Text('Login'),
-                    onPressed: () {
-                      print(nameController.text);
-                      print(passwordController.text);
+                    onPressed: () async {
+                     final studentCredentials= await StudentAuthHttp.loginStudent(nameController.text, passwordController.text);
+                     print(studentCredentials.token);
                     },
                   )
               ),

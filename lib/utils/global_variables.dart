@@ -8,7 +8,7 @@ List<Widget> homeScreenItems = [
   const LeaderBoardScreen(),
   const ProfilePage(),
 ];
-
+const String baseUrl="https://bu-play-backend.herokuapp.com/";
 //String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 String currentUserName = 'User';
 String currentEnrollment = 'E21CSEU0246';
