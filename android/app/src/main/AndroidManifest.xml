@@ -2,7 +2,7 @@
     package="com.example.buplay">
    <application
         android:label="buplay"
-        android:name="${applicationName}"
+        android:name="${buplay}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
