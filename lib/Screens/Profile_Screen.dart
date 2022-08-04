@@ -47,166 +47,166 @@ showDialogBox2(BuildContext context) {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return
-       DefaultScaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: 400,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed:() => Navigator.of(context).maybePop(),
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: kAccentColor,
+    return SafeArea(
+      child: SingleChildScrollView(
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 400,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed:() => Navigator.of(context).maybePop(),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: kAccentColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.58,
-                          ),
-                          IconButton(
-                            onPressed: ()=>showDialogBox2(context),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.58,
+                            ),
+                            IconButton(
+                              onPressed: ()=>showDialogBox2(context),
 
-                            icon: Icon(
-                              Icons.more_vert,
-                              color: kAccentColor,
+                              icon: Icon(
+                                Icons.more_vert,
+                                color: kAccentColor,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      CircleAvatar(
-                        radius: 70,
-                        backgroundColor: kAccentColor,
-                      ),
-                      Text(
-                        'Name',
-                        style: kDarkTextStyle.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.normal),
-                      ),
-                      XpBar(
-                        xpPercent: xpPercent,
-                        level: level,
-                        barWidth: MediaQuery.of(context).size.width * 0.7,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: kNeutralColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                          ],
+                        ),
+                        CircleAvatar(
+                          radius: 70,
+                          backgroundColor: kAccentColor,
+                        ),
+                        Text(
+                          'Name',
+                          style: kDarkTextStyle.copyWith(
+                              fontSize: 20, fontWeight: FontWeight.normal),
+                        ),
+                        XpBar(
+                          xpPercent: xpPercent,
+                          level: level,
+                          barWidth: MediaQuery.of(context).size.width * 0.7,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: kNeutralColor,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/alphaCoin.png',
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('$alphaCoins',
+                                      style: kDarkTextStyle.copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
                             ),
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/alphaCoin.png',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text('$alphaCoins',
-                                    style: kDarkTextStyle.copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-                              ],
+                            const SizedBox(
+                              width: 10,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: kNeutralColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: kNeutralColor,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/sigmaCoin.png',
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('$sigmaCoins',
+                                      style: kDarkTextStyle.copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
                             ),
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/sigmaCoin.png',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text('$sigmaCoins',
-                                    style: kDarkTextStyle.copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'User Information',
-                        style: kLightTextStyle.copyWith(fontSize: 25),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const FieldBox(label: 'Name:', value: 'Swaraj'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const FieldBox(label: 'Enroll:', value: 'E21CSEU0246'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const FieldBox(label: 'Semester:', value: '3rd'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const FieldBox(label: 'Group:', value: 'G2'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const FieldBox(label: 'Batch:', value: 'EB12'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
-              ],
+                  Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'User Information',
+                          style: kLightTextStyle.copyWith(fontSize: 25),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const FieldBox(label: 'Name:', value: 'Swaraj'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const FieldBox(label: 'Enroll:', value: 'E21CSEU0246'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const FieldBox(label: 'Semester:', value: '3rd'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const FieldBox(label: 'Group:', value: 'G2'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const FieldBox(label: 'Batch:', value: 'EB12'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          
         ),
-      );
+    );
   }
 }
 
