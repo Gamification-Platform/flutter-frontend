@@ -16,8 +16,8 @@ class StudentDetails {
       first_name:data["first_name"],
       last_name:data["last_name"],
       enrollment_number:data["enrollment_number"],
-      batch: data["data"],
-      current_semester: data["current_semester"],
+      batch: data["batch"],
+      current_semester: data["current_semester"].toString(),
       department_code: data["department_code"],
       program: data["program"],
       school_code: data["school_code"]

@@ -12,9 +12,17 @@ class StudentAuthHttp{
     },
         body: jsonEncode(<String, String>{
           'username': username,
-          'password':password
+          'password':password,
+          'type':"student"
         })
     );
-    return StudentAuth.fromMap(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return StudentAuth.fromMap(jsonDecode(response.body));
+    } else {
+      print(response.toString());
+      print(response.body);
+      throw Exception("${response.statusCode}");
+    }
+
   }
 }

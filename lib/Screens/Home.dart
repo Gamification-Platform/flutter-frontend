@@ -1,13 +1,15 @@
+import 'package:BUPLAY/models/student_details.dart';
+import 'package:BUPLAY/services/students_http.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/EventCard.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
+import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/XP_bar.dart';
 import '../utils/colors.dart';
-import '../utils/utils.dart';
 import 'Profile_Screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,7 +41,24 @@ showDialogBox(BuildContext context) {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  String _studentId="";
+  @override
+  initState()  {
+    print("this is  in init state");
+    SharedPreferences.getInstance().then((prefs){
+      print("this is in init state with pref");
+      setStudentId(
+          prefs.getString(PREFERENCE_STUDENT_EMAIL)
+      );
+    });
+    super.initState();
+  }
+  void setStudentId(String? id){
+    setState((){
+      _studentId=id!;
+    });
+    print("${_studentId}this is the id");
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
@@ -57,59 +76,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   showDialogBox(context);
                 },
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: kNeutralColor,
-                              radius: 60,
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Swaraj Bachu',
-                                  style: kDarkTextStyle,
-                                ),
-                                const SizedBox(height: 10),
-                                XpBar(
-                                  xpPercent: xpPercent,
-                                  level: level,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Sigma',
-                                      style: kDarkTextStyle.copyWith(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      'Alpha',
-                                      style: kDarkTextStyle.copyWith(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                child: FutureBuilder<StudentDetails>(
+                  future: StudentDetailsHttp.getStudentDetail(_studentId),
+                  builder: (context,snapshot){
+
+                    if (snapshot.hasData){
+                      return StudentDetailView(studentDetails: snapshot.data);
+                    }
+                    if(snapshot.hasError){
+                      print(snapshot.error);
+                      return Text(snapshot.error.toString());
+                    }
+                    return Text("what is wrong");
+                  },
                 ),
               ),
               const SizedBox(
@@ -164,6 +143,72 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class StudentDetailView extends StatelessWidget {
+  StudentDetailView({
+    Key? key,
+    required this.studentDetails
+  }) : super(key: key);
+  StudentDetails? studentDetails;
+  @override
+  Widget build(BuildContext context) {
+    final String studentName="${studentDetails?.first_name} ${studentDetails?.last_name}";
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: kNeutralColor,
+                  radius: 60,
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     Text(
+                      studentName,
+                      style: kDarkTextStyle,
+                    ),
+                    const SizedBox(height: 10),
+                    XpBar(
+                      xpPercent: xpPercent,
+                      level: level,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Sigma',
+                          style: kDarkTextStyle.copyWith(
+                              fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Alpha',
+                          style: kDarkTextStyle.copyWith(
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
