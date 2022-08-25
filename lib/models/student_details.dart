@@ -23,6 +23,7 @@ class StudentDetails {
       school_code: data["school_code"]
     );
   }
+
   StudentDetails({
     required this.id,
     required this.bennett_email,
@@ -35,4 +36,16 @@ class StudentDetails {
     required this.program,
     required this.current_semester
   });
+}
+class User {
+   int alphaCoin;
+  int SignmaCoin;
+      int Xp;
+      int level;
+      User(
+          this.alphaCoin,
+         this.SignmaCoin,
+         this.Xp,
+         this.level
+      );
 }

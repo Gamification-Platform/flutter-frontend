@@ -1,5 +1,6 @@
 import 'package:BUPLAY/Screens/EditProfile.dart';
 import 'package:BUPLAY/Screens/Home.dart';
+import 'package:BUPLAY/Screens/login_screen.dart';
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/colors.dart';
@@ -17,13 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Instagram Clone',
+        title: 'Sample',
         theme: ThemeData.dark().copyWith(
       scaffoldBackgroundColor: kDarkPrimaryColor,
           primaryColor: Colors.deepPurple.shade100,
     ),
-    home: //MobileScreenLayout()
-      MobileScreenLayout()
+    home: MobileScreenLayout()
+      //LoginScreen()
     );
   }
 }

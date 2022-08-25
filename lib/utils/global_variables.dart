@@ -13,6 +13,10 @@ const String baseUrl="https://bu-play-backend.herokuapp.com/";
 String currentUserName = 'User';
 String currentEnrollment = 'E21CSEU0246';
 String currentName = 'Swaraj Bachu';
+String Batch = 'E21';
+String currentGroup = 'G2';
+String currentSemester = 'S2';
+
 const String PREFERENCE_TOKEN_ID="token";
 const String PREFERENCE_STUDENT_EMAIL="student_id";
 List<String> groups = ['G1','G2','G3','G4','G5'];
