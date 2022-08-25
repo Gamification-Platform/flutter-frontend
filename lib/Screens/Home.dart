@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/studentCoin_details.dart';
+import '../services/studentCoins_http.dart';
 import '../utils/XP_bar.dart';
 import '../utils/colors.dart';
 import 'Profile_Screen.dart';
@@ -30,10 +32,11 @@ showDialogBox(BuildContext context) {
       return SimpleDialog(
         children: [
           SimpleDialogOption(
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) =>   ProfilePage()));
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProfilePage()));
             },
-            child:  const Text('Profile Page'),
+            child: const Text('Profile Page'),
           ),
         ],
       );
@@ -42,31 +45,27 @@ showDialogBox(BuildContext context) {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _studentId="";
+  String _studentId = "";
 
   get http => null;
   @override
-  initState()  {
+  initState() {
     print("this is  in init state");
-    SharedPreferences.getInstance().then((prefs){
+    SharedPreferences.getInstance().then((prefs) {
       print("this is in init state with pref");
-      setStudentId(
-          prefs.getString(PREFERENCE_STUDENT_EMAIL)
-      );
-    }
-    );
+      setStudentId(prefs.getString(PREFERENCE_STUDENT_EMAIL));
+    });
 
     super.initState();
   }
 
-
-
-  void setStudentId(String? id){
-    setState((){
-      _studentId=id!;
+  void setStudentId(String? id) {
+    setState(() {
+      _studentId = id!;
     });
     print("${_studentId}this is the id");
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
@@ -86,18 +85,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: FutureBuilder<StudentDetails>(
                   future: StudentDetailsHttp.getStudentDetail(_studentId),
-                  builder: (context,snapshot){
-
-                    if (snapshot.hasData){
-                      return StudentDetailView(studentDetails: snapshot.data);
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return StudentDetailView(
+                        studentDetails: snapshot.data,
+                        levelDetials: levelDetails(),
+                        alphaCoinDetials: alphaCoinDetials(),
+                        sigmaCoinDetails: sigmaCoinDetails(),
+                      );
                     }
-                    if(snapshot.hasError){
+                    if (snapshot.hasError) {
                       print(snapshot.error);
                       return Text(snapshot.error.toString());
                     }
-                    return Container(
-                        height: 100,
-                        child: Text(''));
+                    return Container(height: 100, child: Text(''));
                     //Center(child: CircularProgressIndicator());
                   },
                 ),
@@ -156,17 +157,79 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  FutureBuilder<StudentCoin> levelDetails() {
+    return FutureBuilder<StudentCoin>(
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.level}', style: kDarkTextStyle);
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  FutureBuilder<StudentCoin> sigmaCoinDetails() {
+    return FutureBuilder<StudentCoin>(
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.sigmaCoin}',
+              style: kDarkTextStyle.copyWith(
+                  fontSize: 20, fontWeight: FontWeight.bold));
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  FutureBuilder<StudentCoin> alphaCoinDetials() {
+    return FutureBuilder<StudentCoin>(
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.alphaCoin}',
+              style: kDarkTextStyle.copyWith(
+                  fontSize: 20, fontWeight: FontWeight.bold));
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
+  }
 }
 
 class StudentDetailView extends StatelessWidget {
   StudentDetailView({
     Key? key,
-    required this.studentDetails
+    required this.studentDetails,
+    required this.levelDetials,
+    required this.sigmaCoinDetails,
+    required this.alphaCoinDetials,
   }) : super(key: key);
   StudentDetails? studentDetails;
+  FutureBuilder<StudentCoin> levelDetials;
+  FutureBuilder<StudentCoin> sigmaCoinDetails;
+  FutureBuilder<StudentCoin> alphaCoinDetials;
   @override
   Widget build(BuildContext context) {
-    final String studentName="${studentDetails?.first_name} ${studentDetails?.last_name}";
+    final String studentName =
+        "${studentDetails?.first_name} ${studentDetails?.last_name}";
     return Row(
       children: [
         Expanded(
@@ -186,33 +249,69 @@ class StudentDetailView extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
+                    Text(
                       studentName,
                       style: kDarkTextStyle,
                     ),
                     const SizedBox(height: 10),
                     XpBar(
                       xpPercent: xpPercent,
-                      level: level,
+                      level: levelDetials,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        Text(
-                          'Sigma',
-                          style: kDarkTextStyle.copyWith(
-                              fontWeight: FontWeight.w500),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: kNeutralColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/alphaCoin.png',
+                                width: 20,
+                                height: 20,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              sigmaCoinDetails,
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          'Alpha',
-                          style: kDarkTextStyle.copyWith(
-                              fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: kNeutralColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/sigmaCoin.png',
+                                width: 20,
+                                height: 20,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              alphaCoinDetials,
+                            ],
+                          ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 )
               ],

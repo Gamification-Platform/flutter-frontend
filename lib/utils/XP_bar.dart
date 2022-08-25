@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../models/studentCoin_details.dart';
 import 'Styles.dart';
 
 
 class XpBar extends StatelessWidget {
   final int xpPercent;
-  final int level;
+  FutureBuilder<StudentCoin> level;
   final double barWidth;
-  const XpBar({
+   XpBar({
     Key? key, required this.xpPercent, required this.level, this.barWidth = 190,
   }) : super(key: key);
 
@@ -18,10 +19,8 @@ class XpBar extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: Colors.deepPurple.shade100,
-          child: Text(
-            '$level',
-            style: kDarkTextStyle,
-          ),
+          child: level,
+
         ),
         Padding(
             padding: const EdgeInsets.all(0),

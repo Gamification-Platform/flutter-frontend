@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:BUPLAY/models/studentCoin_details.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +12,11 @@ import '../services/students_http.dart';
 import '../utils/Styles.dart';
 import '../utils/global_variables.dart';
 import 'Profile_Screen.dart';
+import 'package:http/http.dart' as http;
 
 abstract class ProfileFunctions extends State<ProfilePage> {
 
+  static final getEndPoint="${baseUrl}api/students/";
 
   String _studentId = "";
 
@@ -24,7 +28,6 @@ abstract class ProfileFunctions extends State<ProfilePage> {
     });
 
     super.initState();
-    getStudentDetails();
   }
 
   void setStudentId(String? id) {
@@ -47,7 +50,7 @@ abstract class ProfileFunctions extends State<ProfilePage> {
     log('${name}'+'${enrollment}'+'${batch}'+'${semester}');
   }
 
-    getStudentDetails() {
+    getStudentsDetails() {
     return FutureBuilder<StudentDetails>(
       future: StudentDetailsHttp.getStudentDetail(
           _studentId),
@@ -65,6 +68,23 @@ abstract class ProfileFunctions extends State<ProfilePage> {
       },
     );
   }
+
+    getStudentDetails(String studentId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final url=Uri.parse("$getEndPoint$studentId");
+    final token = prefs.get(PREFERENCE_TOKEN_ID);
+    final response = await http.get(url,headers: {
+      HttpHeaders.authorizationHeader: 'Token $token',
+    });
+    print(response.body);
+    print("this the response bksssssssssssssssssssssssss");
+    if (response.statusCode == 200) {
+      return profileDetails(json.decode(response.body)['first_name'], json.decode(response.body)['enrollment_number'], json.decode(response.body)['batch'], json.decode(response.body)['current_semester']);
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
 
 }
 

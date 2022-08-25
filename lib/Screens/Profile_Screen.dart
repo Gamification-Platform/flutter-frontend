@@ -22,9 +22,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 int xpPercent = 50;
-int level = 20;
-int alphaCoins = 100;
-int sigmaCoins = 300;
 
 showDialogBox2(BuildContext context) {
   return showDialog(
@@ -47,10 +44,7 @@ showDialogBox2(BuildContext context) {
   );
 }
 
-
-
 class _ProfilePageState extends ProfileFunctions {
-
   String _studentId = "";
 
   initState() {
@@ -58,12 +52,9 @@ class _ProfilePageState extends ProfileFunctions {
     SharedPreferences.getInstance().then((prefs) {
       print("this is in init state with pref");
       setStudentId(prefs.getString(PREFERENCE_STUDENT_EMAIL));
-
-    }
-    );
+    });
 
     super.initState();
-
   }
 
   void setStudentId(String? id) {
@@ -72,7 +63,6 @@ class _ProfilePageState extends ProfileFunctions {
     });
     print("${_studentId}this is the id");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,28 +110,10 @@ class _ProfilePageState extends ProfileFunctions {
                       radius: 70,
                       backgroundColor: kAccentColor,
                     ),
-                    FutureBuilder<StudentDetails>(
-                      future: StudentDetailsHttp.getStudentDetail(_studentId),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!.first_name +
-                                " " +
-                                snapshot.data!.last_name,
-                            style: kDarkTextStyle.copyWith(
-                                fontSize: 20, fontWeight: FontWeight.normal),
-                          );
-                        }
-                        if (snapshot.hasError) {
-                          print(snapshot.error);
-                          return Text(snapshot.error.toString());
-                        }
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    ),
+                    studentNameDetails(),
                     XpBar(
                       xpPercent: xpPercent,
-                      level: level,
+                      level: levelDetails(),
                       barWidth: MediaQuery.of(context).size.width * 0.7,
                     ),
                     Row(
@@ -164,7 +136,7 @@ class _ProfilePageState extends ProfileFunctions {
                               const SizedBox(
                                 width: 10,
                               ),
-                              StudentCoindetails(),
+                              sigmaCoinDetails(),
                             ],
                           ),
                         ),
@@ -189,24 +161,7 @@ class _ProfilePageState extends ProfileFunctions {
                               const SizedBox(
                                 width: 10,
                               ),
-                              FutureBuilder<StudentCoin>(
-                                future: StudentCoinHttp.getStudentCoinDetails(
-                                    _studentId),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Text('${snapshot.data!.alphaCoin}',
-                                        style: kDarkTextStyle.copyWith(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold));
-                                  }
-                                  if (snapshot.hasError) {
-                                    print(snapshot.error);
-                                    return Text(snapshot.error.toString());
-                                  }
-                                  return Text('');
-                                  //Center(child: CircularProgressIndicator());
-                                },
-                              ),
+                              alphaCoinDetials(),
                             ],
                           ),
                         ),
@@ -224,30 +179,42 @@ class _ProfilePageState extends ProfileFunctions {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'User Information',
-                      style: kLightTextStyle.copyWith(fontSize: 25),
+                    Row(
+                      children: [
+                        Text(
+                          'User Information',
+                          style: kLightTextStyle.copyWith(fontSize: 25),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        loader(),
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                     FieldBox(label: 'Name:', value: fullName),
+                    FieldBox(
+                      label: 'Name:',
+                      value: studentFullNameDetails(),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
-                     FieldBox(label: 'Enroll:', value:  currentEnrollment),
+                    FieldBox(label: 'Enroll:', value: studentEnrollDetails()),
                     const SizedBox(
                       height: 10,
                     ),
-                     FieldBox(label: 'Semester:', value: currentSemester),
+                    FieldBox(
+                        label: 'Semester:', value: studentSemesterDetails()),
                     const SizedBox(
                       height: 10,
                     ),
-                     FieldBox(label: 'Group:', value: 'G2'),
+                    FieldBox(label: 'Group:', value: studentGroupDetails()),
                     const SizedBox(
                       height: 10,
                     ),
-                     FieldBox(label: 'Batch:', value: Batch),
+                    FieldBox(label: 'Batch:', value: studentBatchDetails()),
                     const SizedBox(
                       height: 10,
                     ),
@@ -261,39 +228,232 @@ class _ProfilePageState extends ProfileFunctions {
     );
   }
 
-  FutureBuilder<StudentCoin> StudentCoindetails() {
+  FutureBuilder<StudentDetails> studentNameDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(
+            snapshot.data!.first_name + " " + snapshot.data!.last_name,
+            style: kDarkTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.normal),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> studentFullNameDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(
+            snapshot.data!.first_name + " " + snapshot.data!.last_name,
+            style: kLightTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.w600),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> studentEnrollDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(
+            snapshot.data!.enrollment_number,
+            style: kLightTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.w600),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> studentSemesterDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(
+            snapshot.data!.current_semester,
+            style: kLightTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.w600),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> studentBatchDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(
+            snapshot.data!.batch,
+            style: kLightTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.w600),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> studentGroupDetails() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          int group = 0;
+          int groupId = 0;
+          String batch = snapshot.data!.batch;
+          for (int i = 0; i < batches.length; i++) {
+            if (batches[i] == batch) {
+              groupId = i;
+              if (groupId >= 5 && groupId <= 10) {
+                group = 1;
+              }
+              if (groupId >= 11 && groupId <= 15) {
+                group = 2;
+              }
+              if (groupId >= 16 && groupId <= 20) {
+                group = 3;
+              }
+              if (groupId >= 21 && groupId <= 25) {
+                group = 4;
+              }
+              if (groupId >= 26 && groupId <= 30) {
+                group = 5;
+              }
+            } else {
+              continue;
+            }
+          }
+
+          return Text(
+            '$group',
+            style: kLightTextStyle.copyWith(
+                fontSize: 20, fontWeight: FontWeight.w600),
+          );
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return showSnackBar(context, snapshot.error.toString());
+        }
+        return Text(' ');
+      },
+    );
+  }
+
+  FutureBuilder<StudentDetails> loader() {
+    return FutureBuilder<StudentDetails>(
+      future: StudentDetailsHttp.getStudentDetail(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return const Text(" ");
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  FutureBuilder<StudentCoin> alphaCoinDetials() {
     return FutureBuilder<StudentCoin>(
-                              future: StudentCoinHttp.getStudentCoinDetails(
-                                  _studentId),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text('${snapshot.data!.sigmaCoin}',
-                                      style: kDarkTextStyle.copyWith(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold));
-                                }
-                                if (snapshot.hasError) {
-                                  print(snapshot.error);
-                                  return Text(snapshot.error.toString());
-                                }
-                                return Text('');
-                                //Center(child: CircularProgressIndicator());
-                              },
-                            );
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.alphaCoin}',
+              style: kDarkTextStyle.copyWith(
+                  fontSize: 20, fontWeight: FontWeight.bold));
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  FutureBuilder<StudentCoin> sigmaCoinDetails() {
+    return FutureBuilder<StudentCoin>(
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.sigmaCoin}',
+              style: kDarkTextStyle.copyWith(
+                  fontSize: 20, fontWeight: FontWeight.bold));
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  FutureBuilder<StudentCoin> levelDetails() {
+    return FutureBuilder<StudentCoin>(
+      future: StudentCoinHttp.getStudentCoinDetails(_studentId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text('${snapshot.data!.level}', style: kDarkTextStyle);
+        }
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text(snapshot.error.toString());
+        }
+        return Text('');
+        //Center(child: CircularProgressIndicator());
+      },
+    );
   }
 }
 
 class FieldBox extends StatelessWidget {
   final String label;
-  String value;
-   FieldBox({
+  FutureBuilder<StudentDetails> value;
+  FieldBox({
     Key? key,
     required this.label,
     required this.value,
   }) : super(key: key);
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -307,15 +467,12 @@ class FieldBox extends StatelessWidget {
       ),
       child: Row(
         children: [
-        Text(
-        label,
-        style: kLightTextStyle,
-      ),
-          const SizedBox(width: 20),
           Text(
-            value,
+            label,
             style: kLightTextStyle,
           ),
+          const SizedBox(width: 20),
+          value,
         ],
       ),
     );
