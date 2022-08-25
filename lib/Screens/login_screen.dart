@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
@@ -68,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     child: const Text('Login'),
                     onPressed: () async {
-                      print("login  clicked");
+                      log("login  clicked");
                       final prefs = await SharedPreferences.getInstance();
                       try{
                         final studentCredentials= await StudentAuthHttp.loginStudent(nameController.text, passwordController.text);
@@ -77,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _gotoHomeScreen();
                       }
                       catch (e){
-                          print(e);
+                          log("$e");
                       }
                     },
                   )

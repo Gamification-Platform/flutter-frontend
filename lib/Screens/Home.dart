@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:BUPLAY/models/student_details.dart';
 import 'package:BUPLAY/services/students_http.dart';
 import 'package:BUPLAY/utils/Styles.dart';
@@ -42,6 +43,8 @@ showDialogBox(BuildContext context) {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _studentId="";
+
+  get http => null;
   @override
   initState()  {
     print("this is  in init state");
@@ -50,9 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
       setStudentId(
           prefs.getString(PREFERENCE_STUDENT_EMAIL)
       );
-    });
+    }
+    );
+
     super.initState();
   }
+
+
+
   void setStudentId(String? id){
     setState((){
       _studentId=id!;
@@ -87,7 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       print(snapshot.error);
                       return Text(snapshot.error.toString());
                     }
-                    return Text("what is wrong");
+                    return Container(
+                        height: 100,
+                        child: Text(''));
+                    //Center(child: CircularProgressIndicator());
                   },
                 ),
               ),
