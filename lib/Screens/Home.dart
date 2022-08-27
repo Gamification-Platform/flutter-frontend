@@ -6,8 +6,6 @@ import 'package:BUPLAY/utils/Widgets/EventCard.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/studentCoin_details.dart';
 import '../services/studentCoins_http.dart';
@@ -46,8 +44,6 @@ showDialogBox(BuildContext context) {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _studentId = "";
-
-  get http => null;
   @override
   initState() {
     print("this is  in init state");
@@ -107,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 20,
               ),
               Text(
-                'Event List',
+                '  Event List',
                 style: kLightTextStyle.copyWith(fontSize: 30),
               ),
               const SizedBox(

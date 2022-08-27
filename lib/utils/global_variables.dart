@@ -1,11 +1,12 @@
 import 'package:BUPLAY/Screens/Home.dart';
 import 'package:BUPLAY/Screens/Profile_Screen.dart';
 import 'package:BUPLAY/Screens/leaderboardScreen.dart';
+import 'package:BUPLAY/Screens/transaction_history_screen.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> homeScreenItems = [
   const HomeScreen(),
-  const LeaderBoardScreen(),
+  const TransactionHistoryScreen(),
   const ProfilePage(),
 ];
 const String baseUrl="https://bu-play-backend.herokuapp.com/";
