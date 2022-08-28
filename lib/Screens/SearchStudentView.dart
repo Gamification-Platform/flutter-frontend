@@ -1,10 +1,13 @@
 import 'package:BUPLAY/models/student_details.dart';
+import 'package:BUPLAY/services/transaction_http.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/students_http.dart';
 import '../utils/colors.dart';
+import '../utils/global_variables.dart';
 
 
 class SearchStudentView extends StatefulWidget {
@@ -15,7 +18,21 @@ class SearchStudentView extends StatefulWidget {
 }
 
 class _SearchStudentViewState extends State<SearchStudentView> {
-  showStudentDialog(context) {
+  TextEditingController amountController = TextEditingController();
+  final _studentSearchController = TextEditingController();
+  String studentSearching =' ';
+  String _selectedStudentId="";
+  String _staffId = "";
+  StudentDetails? _selectedStudent;
+  @override
+  void initState() {
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _staffId = prefs.getString(PREFERENCE_PROFESSOR_EMAIL)!;
+      });
+    });
+  }
+    showStudentDialog(context) {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -25,37 +42,34 @@ class _SearchStudentViewState extends State<SearchStudentView> {
             borderRadius: BorderRadius.circular(100),
           ),
           height: MediaQuery.of(context).size.height * 0.3,
-          child: FutureBuilder<StudentDetails>(
-            future: StudentDetailsHttp.getStudentDetail('${_studentSearchController.text}@bennett.edu.in'),
-            builder: (context, snapshot) {
-              print('${_studentSearchController.text}@bennett.edu.in');
-              if (snapshot.hasData) {
-                print('${snapshot.data!.first_name}');
-                return Column(
-                  children: [
-                    Text('StudentName',style: kDarkTextStyle,)
-                  ],
-                );
-              }
-              if (snapshot.hasError) {
-                print(snapshot.error);
-                return Text(snapshot.error.toString());
-              }
-              return CircularProgressIndicator();
-              //Center(child: CircularProgressIndicator());
-            },
+          child: Column(
+            children: [
+              Text("Name ${_selectedStudent?.first_name} ${_selectedStudent?.last_name}",style: kDarkTextStyle),
+              Text("Batch ${_selectedStudent?.batch}"),
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  controller: amountController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter Sigma Amount',
+                  ),
+                ),
+              ),
+
+            ],
           ),
         ),
         actions: <Widget>[
           BasicButton(onPress: Navigator.of(context).pop, buttonText: 'Cancel'),
-          BasicButton(onPress: (){}, buttonText: 'Proceed'),
+          BasicButton(onPress: () async {
+            await TransactionHttp.makeSigmaTransaction(_staffId, _selectedStudentId, int.parse(amountController.text));
+          }, buttonText: 'Proceed'),
         ],
       ),
     );
   }
 
-  final _studentSearchController = TextEditingController();
-  String studentSearching =' ';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +96,6 @@ class _SearchStudentViewState extends State<SearchStudentView> {
               decoration:  InputDecoration(
                 filled: true,
                 fillColor: primaryColor,
-                hintText: 'E21CSEU0246',
                 hintStyle: kDarkTextStyle.copyWith(fontSize: 14,),
                 prefixIcon: const Icon(Icons.person,color: kDarkPrimaryColor,),
                 focusedBorder: const  OutlineInputBorder(
@@ -102,11 +115,22 @@ class _SearchStudentViewState extends State<SearchStudentView> {
               }
             ),
             const SizedBox(height: 10,),
-            BasicButton(onPress: ()=> showStudentDialog(context), buttonText: 'Search')
+            BasicButton(onPress: () async {
+             await getSelectedStudent();
+              showStudentDialog(context);
+            }, buttonText: 'Search')
           ],
         ),
 
       ),
     );
   }
+
+  getSelectedStudent() async {
+    StudentDetails studentDetails= await StudentDetailsHttp.getStudentDetail('${_studentSearchController.text}@bennett.edu.in');
+    setState((){
+      _selectedStudent=studentDetails;
+    });
+    print("${_selectedStudent?.bennett_email} is the studdenyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyt mail");
+    }
 }

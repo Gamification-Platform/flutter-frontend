@@ -128,7 +128,7 @@ class _ProfessorDashboardState extends ProfessorFunctions {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: primaryColor,
-                hintText: 'E21CSEU0246',
+                hintText: 'Search A Student',
                 hintStyle: kDarkTextStyle.copyWith(fontSize: 14,),
                 prefixIcon: const Icon(Icons.person, color: kDarkPrimaryColor,),
                 focusedBorder: const OutlineInputBorder(
@@ -238,26 +238,6 @@ class ProfessorDetail extends StatelessWidget {
     )
     ]
     ,
-    );
-  }
-
-  FutureBuilder<StaffCoin> getStaffCoin(String id) {
-    return FutureBuilder<StaffCoin>(
-      future: StaffCoinHttp.getStaffCoinDetails(id),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(
-            "Alloted Coins: ${snapshot.data?.sigmaCoin}",
-            style: kDarkTextStyle.copyWith(
-                fontWeight: FontWeight.w500,
-                fontSize: 16),
-          );
-        }
-        else if (snapshot.hasError) {
-          return Text("Error");
-        }
-        return const CircularProgressIndicator();
-      },
     );
   }
 }
