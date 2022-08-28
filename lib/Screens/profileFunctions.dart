@@ -21,9 +21,7 @@ abstract class ProfileFunctions extends State<ProfilePage> {
   String _studentId = "";
 
   initState() {
-    print("this is  in init state");
     SharedPreferences.getInstance().then((prefs) {
-      print("this is in init state with pref");
       setStudentId(prefs.getString(PREFERENCE_STUDENT_EMAIL));
     });
 
@@ -68,23 +66,5 @@ abstract class ProfileFunctions extends State<ProfilePage> {
       },
     );
   }
-
-    getStudentDetails(String studentId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final url=Uri.parse("$getEndPoint$studentId");
-    final token = prefs.get(PREFERENCE_TOKEN_ID);
-    final response = await http.get(url,headers: {
-      HttpHeaders.authorizationHeader: 'Token $token',
-    });
-    print(response.body);
-    print("this the response bksssssssssssssssssssssssss");
-    if (response.statusCode == 200) {
-      return profileDetails(json.decode(response.body)['first_name'], json.decode(response.body)['enrollment_number'], json.decode(response.body)['batch'], json.decode(response.body)['current_semester']);
-    } else {
-      throw Exception(response.body);
-    }
-  }
-
-
 }
 

@@ -1,5 +1,4 @@
 class StaffDetails {
-  final int id;
   final String bennett_email;
   final String first_name;
   final String last_name;
@@ -16,11 +15,10 @@ class StaffDetails {
   final String status;
   factory StaffDetails.fromMap(Map data){
     return StaffDetails(
-        id:data["id"],
         bennett_email:data["bennett_email"],
         first_name:data["first_name"],
         last_name:data["last_name"],
-        faculty_id:data["faculty_id"],
+        faculty_id:data["faculty_id"].toString(),
         designation: data["designation"],
         cabin_number: data["cabin_number"],
         intercom: data["intercom"].toString(),
@@ -35,7 +33,6 @@ class StaffDetails {
   }
 
   StaffDetails({
-    required this.id,
     required this.bennett_email,
     required this.first_name,
     required this.last_name,

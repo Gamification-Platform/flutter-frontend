@@ -37,15 +37,3 @@ class StudentDetails {
     required this.current_semester
   });
 }
-class User {
-   int alphaCoin;
-  int SignmaCoin;
-      int Xp;
-      int level;
-      User(
-          this.alphaCoin,
-         this.SignmaCoin,
-         this.Xp,
-         this.level
-      );
-}
