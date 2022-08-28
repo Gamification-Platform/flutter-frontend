@@ -80,7 +80,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                   ),
                   const SizedBox(height: 20,),
 
-                  Expanded(child: TransactionList(id: _id,coin: _coin,time_period: _time_period)),
+                  Expanded(child: TransactionList(id: _id,coin: _coin,time_period: _time_period,userType: "receiver_id",)),
 
                 ],
               ),
@@ -161,14 +161,19 @@ class TransactionList extends StatelessWidget {
   String id;
   String coin="alpha";
   String time_period="";
-  TransactionList({Key? key,required this.id,required this.time_period,required this.coin}) : super(key: key);
+  String userType="receiver_id";
+  TransactionList({Key? key,required this.id,required this.time_period,required this.coin,required this.userType}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<TransactionDetail>>(
-      future: TransactionHttp.getTransactionHistory(id,type: coin,timePeriod: time_period,latest: true),
+      future: TransactionHttp.getTransactionHistory(id,type: coin,timePeriod: time_period,latest: true,user: userType),
         builder: (context,snapshot){
             if(snapshot.data==null){
               return const Center(child: CircularProgressIndicator());
+            }
+            if(snapshot.hasError){
+              print("${snapshot.error.toString()}  this is transacction errorrrrrrrrrrrrrrrrrrrr");
+              return Text("Error");
             }
             List<TransactionDetail> transactions=snapshot.data!;
             return ListView.builder(

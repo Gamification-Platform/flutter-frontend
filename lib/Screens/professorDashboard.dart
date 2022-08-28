@@ -1,5 +1,6 @@
 import 'package:BUPLAY/Screens/SearchStudentView.dart';
 import 'package:BUPLAY/Screens/professorFunctions.dart';
+import 'package:BUPLAY/Screens/transaction_history_screen.dart';
 import 'package:BUPLAY/models/staffCoin_details.dart';
 import 'package:BUPLAY/models/staff_details.dart';
 import 'package:BUPLAY/services/staffCoins_http.dart';
@@ -144,7 +145,9 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => SearchStudentView())).then((value){initState();} );
               },
-            )
+            ),
+            Text('Sigma transaction History', style: kLightTextStyle,),
+            Expanded(child: TransactionList(id: _staffId,coin: "sigma",time_period: "week",userType: "sender_id",)),
           ],
         ),
       ),

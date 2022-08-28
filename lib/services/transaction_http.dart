@@ -11,11 +11,11 @@ import 'package:http/http.dart' as http;
 
 class TransactionHttp{
   static const getEndPoint="${baseUrl}api/students/";
-  static Future<List<TransactionDetail>>  getTransactionHistory(String id,{String type="alpha",bool latest=true,String timePeriod="week"}) async {
+  static Future<List<TransactionDetail>>  getTransactionHistory(String id,{String user="receiver_id",String type="alpha",bool latest=true,String timePeriod="week"}) async {
     final prefs = await SharedPreferences.getInstance();
     var url=Uri.parse("${baseUrl}api/transaction/$type/").replace(
       queryParameters: {
-        "receiver_id":id.toString(),
+        user:id.toString(),
         'latest':latest?"true":"false",
         "time_period":timePeriod,
       }
