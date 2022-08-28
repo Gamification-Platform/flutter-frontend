@@ -1,3 +1,4 @@
+import 'package:BUPLAY/Screens/professorDashboard.dart';
 import 'package:BUPLAY/models/student_details.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
@@ -272,7 +273,8 @@ class ConfirmationBox extends StatelessWidget {
                         "Transaction successful with id ${transactionDetail.id}",
                       ),
                     ));
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProfessorDashboard()));
                   }
                 },
                 buttonText: "Send")

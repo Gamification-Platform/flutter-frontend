@@ -141,8 +141,8 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => SearchStudentView()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => SearchStudentView())).then((value){initState();} );
               },
             )
           ],
