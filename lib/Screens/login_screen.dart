@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:BUPLAY/Screens/professorDashboard.dart';
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
@@ -18,12 +19,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  String _userType="student";
   @override
   Widget build(BuildContext context) {
     void _gotoHomeScreen(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => (const MobileScreenLayout())));
+    }
+    void _gotoProfessorDashboard(){
+      Navigator.push(context,
+            MaterialPageRoute(builder: (context) => (const ProfessorDashboard())));
     }
     return DefaultScaffold(
       body:Padding(
@@ -51,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+
               Container(
                 padding: const EdgeInsets.all(20),
                 child: TextField(
@@ -62,6 +68,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+          RadioListTile(
+              title: Text("Student"),
+              value: "student",
+              groupValue: _userType,
+              onChanged: (value){
+                setState(() {
+                  _userType = value.toString();
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text("Staff"),
+              value: "staff",
+              groupValue: _userType,
+              onChanged: (value){
+                setState(() {
+                  _userType = value.toString();
+                });
+              },
+            ),
 
               Container(
                   height: 50,
@@ -73,10 +99,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       log("login  clicked");
                       final prefs = await SharedPreferences.getInstance();
                       try{
-                        final studentCredentials= await StudentAuthHttp.loginStudent(nameController.text, passwordController.text);
-                        prefs.setString(PREFERENCE_TOKEN_ID,studentCredentials.token);
-                        prefs.setString(PREFERENCE_STUDENT_EMAIL,nameController.text+"@bennett.edu.in");
-                        _gotoHomeScreen();
+                        print(_userType);
+                        if(_userType=="student"){
+                          final credentials= await StudentAuthHttp.loginStudent(nameController.text, passwordController.text);
+                          prefs.setString(PREFERENCE_STUDENT_EMAIL,nameController.text+"@bennett.edu.in");
+                          prefs.setString(PREFERENCE_TOKEN_ID,credentials.token);
+                          _gotoHomeScreen();
+                        }
+                        else{
+                          final credentials = await StudentAuthHttp.loginStaff(nameController.text, passwordController.text);
+                          prefs.setString(PREFERENCE_PROFESSOR_EMAIL,nameController.text+"@bennett.edu.in");
+                          prefs.setString(PREFERENCE_TOKEN_ID,credentials.token);
+                          _gotoProfessorDashboard();
+                        }
                       }
                       catch (e){
                           log("$e");
