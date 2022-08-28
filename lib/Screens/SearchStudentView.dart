@@ -15,6 +15,13 @@ class SearchStudentView extends StatefulWidget {
 }
 
 class _SearchStudentViewState extends State<SearchStudentView> {
+
+
+  final _studentSearchController = TextEditingController();
+  final _sigmaCoinsController = TextEditingController();
+  String studentSearching =' ';
+  int coinsSending = 0;
+
   showStudentDialog(context) {
     showDialog(
       context: context,
@@ -30,10 +37,48 @@ class _SearchStudentViewState extends State<SearchStudentView> {
             builder: (context, snapshot) {
               print('${_studentSearchController.text}@bennett.edu.in');
               if (snapshot.hasData) {
-                print('${snapshot.data!.first_name}');
+                print('${snapshot.data!.first_name} + ${snapshot.data!.last_name}');
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('StudentName',style: kDarkTextStyle,)
+                    Text('${snapshot.data!.first_name}  ${snapshot.data!.last_name}',style: kDarkTextStyle,),
+                    const SizedBox(height: 10,),
+                    Text('${snapshot.data!.bennett_email} ',style: kDarkTextStyle.copyWith(fontSize: 16),),
+                    const SizedBox(height: 10,),
+                    Text('Batch: ${snapshot.data!.batch} ',style: kDarkTextStyle.copyWith(fontSize: 16),),
+                    const SizedBox(height: 10,),
+                    Text('Semester: ${snapshot.data!.current_semester} ',style: kDarkTextStyle.copyWith(fontSize: 16),),
+                    const SizedBox(height: 10,),
+                    Text('Program: ${snapshot.data!.program} ',style: kDarkTextStyle.copyWith(fontSize: 16),),
+                    const SizedBox(height: 10,),
+                    Text('Enter the number of coins you want to transfer',style: kDarkTextStyle.copyWith(fontSize: 19),),
+                    const SizedBox(height: 10,),
+                    TextField(
+                        style: kLightTextStyle.copyWith(fontSize: 14),
+                        controller: _sigmaCoinsController,
+                        decoration:  InputDecoration(
+                          filled: true,
+                          fillColor: kDarkPrimaryColor,
+                          hintText: '20',
+                          hintStyle: kDarkTextStyle.copyWith(fontSize: 14,),
+                          prefixIcon: const Icon(Icons.monetization_on,color: primaryColor,),
+                          focusedBorder: const  OutlineInputBorder(
+                            borderSide: BorderSide(width: 0,),
+                            borderRadius: BorderRadius.all(Radius.circular(20),
+                            ),),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)
+                            ),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (text){
+                          setState(() {
+                            coinsSending = int.parse(_sigmaCoinsController.text);
+
+                          });
+                        }
+                    ),
                   ],
                 );
               }
@@ -48,14 +93,18 @@ class _SearchStudentViewState extends State<SearchStudentView> {
         ),
         actions: <Widget>[
           BasicButton(onPress: Navigator.of(context).pop, buttonText: 'Cancel'),
-          BasicButton(onPress: (){}, buttonText: 'Proceed'),
+          BasicButton(onPress: (){
+            Navigator.of(context).pop;
+            showDialog(context: context, builder: (BuildContext context){
+              return ConfirmationBox(title: 'You are sending ${_sigmaCoinsController.text} Coins',);
+            });
+          }, buttonText: 'Proceed'),
         ],
       ),
     );
   }
+  
 
-  final _studentSearchController = TextEditingController();
-  String studentSearching =' ';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,3 +159,27 @@ class _SearchStudentViewState extends State<SearchStudentView> {
     );
   }
 }
+
+class ConfirmationBox extends StatelessWidget {
+  final String title;
+  const ConfirmationBox({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        height: 180,
+        child: Column(
+          children: [
+            Text(title,style: kDarkTextStyle.copyWith(fontSize: 16),),
+            BasicButton(onPress: (){}, buttonText: "Send")
+          ],
+        ),
+      ),
+    );
+  }
+}
+
