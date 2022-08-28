@@ -16,7 +16,7 @@ class TransactionDetail{
       id: data["id"],
       receiverId: data["receiver_id"],
       senderId: data["sender_id"],
-      amount: data["amount"],
+      amount: int.parse(data["amount"].toString()),
       currentTimestamp: data["current_timestamp"].toString()
     );
   }

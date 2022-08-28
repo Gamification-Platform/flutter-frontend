@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Sample',
         theme: ThemeData.dark().copyWith(
+
       scaffoldBackgroundColor: kDarkPrimaryColor,
           primaryColor: Colors.deepPurple.shade100,
     ),

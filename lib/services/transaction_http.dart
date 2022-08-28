@@ -45,17 +45,34 @@ class TransactionHttp{
   static Future<TransactionDetail> makeSigmaTransaction(String senderId,String receiverId,int amount) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.get(PREFERENCE_TOKEN_ID);
-    Uri url= Uri.parse("${baseUrl}api/transaction/sigma/makeTransaction");
+    print("this is the tokennnnnnn $token");
+    Uri url= Uri.parse("${baseUrl}api/transaction/sigma/make-transaction");
+    // var body =<String,String>{
+    //   "sender_id":senderId,
+    //   "receiver_id":receiverId,
+    //   "amount":amount.toString(),
+    // };
+    // print("${body} this the bodyyyyyy");
+    var encode =jsonEncode(<String,String>{
+      "sender_id":senderId,
+      "receiver_id":receiverId,
+      "amount":amount.toString(),
+    });
+    print("$encode this is the encode ddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
     var response = await http.post(url,headers: {
+      // 'Content-Type': 'application/text; charset=UTF-8',
+      // HttpHeaders.contentTypeHeader:"application/json",
       HttpHeaders.authorizationHeader: 'Token $token',
     },
-      body:jsonEncode({
+      body:<String,String>{
         "sender_id":senderId,
         "receiver_id":receiverId,
-        "amount":amount
-      })
+        "amount":amount.toString(),
+      }
     );
+    print("url");
     if (response.statusCode == 200){
+      print("this is responsessssssssssssssssssssssssss transactionnnnnnnnnn   ${response.body}");
       return TransactionDetail.fromMap(jsonDecode(response.body));
     }
     else {

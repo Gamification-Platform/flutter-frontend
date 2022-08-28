@@ -5,6 +5,7 @@ import 'package:BUPLAY/utils/Widgets/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/transaction_detail.dart';
 import '../services/students_http.dart';
 import '../utils/colors.dart';
 import '../utils/global_variables.dart';
@@ -36,24 +37,24 @@ class _SearchStudentViewState extends State<SearchStudentView> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        backgroundColor: primaryColor,
+        backgroundColor: kDarkPrimaryColor,
         content: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-          ),
+
           height: MediaQuery.of(context).size.height * 0.3,
           child: Column(
             children: [
-              Text("Name ${_selectedStudent?.first_name} ${_selectedStudent?.last_name}",style: kDarkTextStyle),
+              Text("Name ${_selectedStudent?.first_name} ${_selectedStudent?.last_name}"),
               Text("Batch ${_selectedStudent?.batch}"),
               Container(
                 padding: const EdgeInsets.all(20),
                 child: TextField(
                   controller: amountController,
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
                     labelText: 'Enter Sigma Amount',
-                  ),
+                  )
+                  ,
+                  keyboardType:  TextInputType.number,
+
                 ),
               ),
 
@@ -63,7 +64,17 @@ class _SearchStudentViewState extends State<SearchStudentView> {
         actions: <Widget>[
           BasicButton(onPress: Navigator.of(context).pop, buttonText: 'Cancel'),
           BasicButton(onPress: () async {
-            await TransactionHttp.makeSigmaTransaction(_staffId, _selectedStudentId, int.parse(amountController.text));
+            TransactionDetail transactionDetail=await TransactionHttp.makeSigmaTransaction(_staffId, _selectedStudent!.bennett_email, int.parse(amountController.text));
+            print("${transactionDetail.id} this is the id transactionnnnnnnnnnnnnnnn");
+            if(transactionDetail!=null){
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content:                   Text("Transaction successful with id ${transactionDetail.id}",
+                ),
+                )
+              );
+              Navigator.of(context).pop();
+
+            }
           }, buttonText: 'Proceed'),
         ],
       ),
