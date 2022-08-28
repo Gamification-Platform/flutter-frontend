@@ -17,7 +17,7 @@ class StudentDetailsHttp{
       HttpHeaders.authorizationHeader: 'Token $token',
     });
     print(response.body);
-    print("this the response bksssssssssssssssssssssssss");
+    print("this the response bks");
     if (response.statusCode == 200) {
       return StudentDetails.fromMap(jsonDecode(response.body));
     } else {

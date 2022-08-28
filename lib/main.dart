@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: kDarkPrimaryColor,
           primaryColor: Colors.deepPurple.shade100,
     ),
-    home: MobileScreenLayout()
-      //ProfessorDashboard()
+    home: //MobileScreenLayout()
+      ProfessorDashboard()
       //LoginScreen()
     );
   }

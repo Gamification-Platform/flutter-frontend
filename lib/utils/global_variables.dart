@@ -20,6 +20,8 @@ String currentSemester = 'S2';
 
 const String PREFERENCE_TOKEN_ID="token";
 const String PREFERENCE_STUDENT_EMAIL="student_id";
+const String PREFERENCE_PROFESSOR_EMAIL="professor_id";
+
 List<String> groups = ['G1','G2','G3','G4','G5'];
 
 List<String> batches = ['eb1','eb2','eb3','eb4','eb5','eb6','eb7','eb8','eb9','eb10','eb11','eb12','eb13'
