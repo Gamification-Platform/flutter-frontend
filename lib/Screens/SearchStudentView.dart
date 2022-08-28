@@ -94,7 +94,6 @@ class _SearchStudentViewState extends State<SearchStudentView> {
         actions: <Widget>[
           BasicButton(onPress: Navigator.of(context).pop, buttonText: 'Cancel'),
           BasicButton(onPress: (){
-            Navigator.of(context).pop;
             showDialog(context: context, builder: (BuildContext context){
               return ConfirmationBox(title: 'You are sending ${_sigmaCoinsController.text} Coins',);
             });
@@ -163,7 +162,6 @@ class _SearchStudentViewState extends State<SearchStudentView> {
 class ConfirmationBox extends StatelessWidget {
   final String title;
   const ConfirmationBox({Key? key, required this.title}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -171,10 +169,17 @@ class ConfirmationBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
+        decoration: const BoxDecoration(
+          color: primaryColor,
+        ),
         height: 180,
         child: Column(
           children: [
+            const SizedBox(height: 10,),
+            const Icon(Icons.compare_arrows,color: kDarkPrimaryColor,size: 50,),
+            const  SizedBox(height: 30,),
             Text(title,style: kDarkTextStyle.copyWith(fontSize: 16),),
+            const  SizedBox(height: 10,),
             BasicButton(onPress: (){}, buttonText: "Send")
           ],
         ),
