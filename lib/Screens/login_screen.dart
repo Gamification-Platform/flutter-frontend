@@ -96,7 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     child: const Text('Login'),
                     onPressed: () async {
-                      log("login  clicked");
                       final prefs = await SharedPreferences.getInstance();
                       try{
                         print(_userType);
