@@ -2,10 +2,12 @@
 
 import 'package:BUPLAY/models/transaction_detail.dart';
 import 'package:BUPLAY/services/transaction_http.dart';
+import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/colors.dart';
 import '../utils/global_variables.dart';
 
 class TransactionHistoryScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
   String _coin="alpha";
   String _time_period="";
   bool _latest=false;
+  int selected =0;
   @override
   void initState() {
     print("mail ");
@@ -35,33 +38,52 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return DefaultScaffold(body: Center(
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: const Text('Transaction History',style: kDarkTextStyle,),
+        ),
+        body: Center(
         child:
-            Column(
-              children: [
-                RadioListTile(
-                  title: Text("Alpha"),
-                  value: "alpha",
-                  groupValue: _coin,
-                  onChanged: (value){
-                    setState(() {
-                      _coin = value.toString();
-                    });
-                  },
-                ),
-                RadioListTile(
-                  title: Text("Sigma"),
-                  value: "sigma",
-                  groupValue: _coin,
-                  onChanged: (value){
-                    setState(() {
-                      _coin = value.toString();
-                    });
-                  },
-                ),
-                Expanded(child: TransactionList(id: _id,coin: _coin,time_period: _time_period))
+            Container(
+              margin: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // RadioListTile(
+                  //   title: Text("Alpha"),
+                  //   value: "alpha",
+                  //   groupValue: _coin,
+                  //   onChanged: (value){
+                  //     setState(() {
+                  //       _coin = value.toString();
+                  //     });
+                  //   },
+                  // ),
+                  // RadioListTile(
+                  //   title: Text("Sigma"),
+                  //   value: "sigma",
+                  //   groupValue: _coin,
+                  //   onChanged: (value){
+                  //     print("${value} this from radiotiles");
+                  //     setState(() {
+                  //       _coin = value.toString();
+                  //     });
+                  //   },
+                  // ),
+                  const SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Expanded(child: CustomRadioButton("sigma", 0)),
+                      const SizedBox(width: 10,),
+                      Expanded(child: CustomRadioButton("alpha", 1)),
+                    ],
+                  ),
+                  const SizedBox(height: 20,),
 
-              ],
+                  Expanded(child: TransactionList(id: _id,coin: _coin,time_period: _time_period)),
+
+                ],
+              ),
             )
     )
     // Column(
@@ -116,6 +138,24 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
       // TransactionList(id: _id,coin: _coin,time_period: _time_period)
     );
   }
+
+  Widget CustomRadioButton(String text,int index){
+    return OutlinedButton(
+      onPressed: (){
+        setState(() {
+          selected = index;
+          _coin=text;
+        });
+      },
+      style: OutlinedButton.styleFrom(
+        backgroundColor: selected == index ? kAccentColor : Colors.deepPurple.shade100,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Text(text,style: TextStyle(color: selected == index ? primaryColor : kDarkColor,fontWeight: FontWeight.w700),),
+    );
+  }
 }
 class TransactionList extends StatelessWidget {
   String id;
@@ -168,24 +208,39 @@ class TransactionItem extends StatelessWidget {
       DateTime dateTime=DateTime.parse(date);
       return "${dateTime.day}/${dateTime.month}/${dateTime.year} at ${dateTime.hour}:${dateTime.minute}";
     }
-    return  Card(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.outline,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+    return  Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      height: 90,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: kDarkSecondaryColor,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.money),
-            title: Text("Received $amount from $senderId"),
-            subtitle: Text("Gotten at ${getDateStringInFormat(dateTime)} with id $id"),
+      child: Row(
+        children: [
+          Icon(Icons.payment,color: primaryColor,),
+          const SizedBox(width: 20,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('''Received $amount from''',
+                style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+              const SizedBox(height: 5,),
+              Text('''$senderId''',
+                style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+              const SizedBox(height: 5,),
+              Text("At ${getDateStringInFormat(dateTime)} with id $id",style: kLightTextStyle.copyWith(fontSize: 14,fontWeight: FontWeight.w300),),
+            ],
           ),
+          const SizedBox(width: 20),
+
         ],
       ),
     );
   }
 }
+
+
+
 

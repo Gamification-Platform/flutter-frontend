@@ -56,7 +56,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         animationDuration: const Duration(milliseconds: 300),
         items: const <Widget>[
           Icon(Icons.home, size: 30,color: kDarkPrimaryColor),
-          Icon(Icons.leaderboard, size: 30,color: kDarkPrimaryColor),
+          Icon(Icons.history, size: 30,color: kDarkPrimaryColor),
           Icon(Icons.person, size: 30,color: kDarkPrimaryColor),
         ],
         onTap: (index) {

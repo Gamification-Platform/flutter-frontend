@@ -1,6 +1,8 @@
+import 'package:BUPLAY/Screens/Admin_Screen.dart';
 import 'package:BUPLAY/Screens/EditProfile.dart';
 import 'package:BUPLAY/Screens/Home.dart';
 import 'package:BUPLAY/Screens/login_screen.dart';
+import 'package:BUPLAY/Screens/professorDashboard.dart';
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/colors.dart';
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.deepPurple.shade100,
     ),
     home: MobileScreenLayout()
+      //ProfessorDashboard()
       //LoginScreen()
     );
   }
