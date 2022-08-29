@@ -2,6 +2,7 @@ import 'package:BUPLAY/Screens/professorDashboard.dart';
 import 'package:BUPLAY/models/student_details.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
+import 'package:BUPLAY/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -153,7 +154,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                     builder: (BuildContext context) {
                       return ConfirmationBox(
                         title:
-                            'You are sending ${_sigmaCoinsController.text} Coins',
+                            'You are sending ${_sigmaCoinsController.text} Coins to ${_studentSearchController.text}',
                         amount: int.parse(_sigmaCoinsController.text),
                         receiverId:
                             "${_studentSearchController.text}@bennett.edu.in",
@@ -173,7 +174,8 @@ class _SearchStudentViewState extends State<SearchStudentView> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const ProfessorDashboard())),
           icon: Icon(
             Icons.arrow_back,
             color: kAccentColor,
@@ -195,6 +197,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: primaryColor,
+                  hintText: 'e21cseu0246',
                   hintStyle: kDarkTextStyle.copyWith(
                     fontSize: 14,
                   ),
@@ -253,13 +256,18 @@ class ConfirmationBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
+        color: primaryColor,
         height: 180,
         child: Column(
           children: [
+            const SizedBox(height: 10,),
+            Icon(Icons.compare_arrows,size: 50,color: kDarkPrimaryColor,),
+            const SizedBox(height: 10,),
             Text(
               title,
               style: kDarkTextStyle.copyWith(fontSize: 16),
             ),
+            const SizedBox(height: 10,),
             BasicButton(
                 onPress: () async {
                   TransactionDetail transactionDetail =
@@ -275,6 +283,9 @@ class ConfirmationBox extends StatelessWidget {
                     ));
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => ProfessorDashboard()));
+                  }
+                  else{
+                    showSnackBar(context, 'There is Some error Transaction was not successful');
                   }
                 },
                 buttonText: "Send")

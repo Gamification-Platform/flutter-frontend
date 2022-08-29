@@ -31,10 +31,11 @@ class _ProfessorDashboardState extends ProfessorFunctions {
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _staffId = prefs.getString(PREFERENCE_PROFESSOR_EMAIL)!;
-        StaffCoinHttp.getStaffCoinDetails(prefs.getString(PREFERENCE_PROFESSOR_EMAIL)!).then((value) =>
-            setState(() {
-              _sigmaCoin = value.sigmaCoin.toString();
-            }));
+        StaffCoinHttp.getStaffCoinDetails(
+                prefs.getString(PREFERENCE_PROFESSOR_EMAIL)!)
+            .then((value) => setState(() {
+                  _sigmaCoin = value.sigmaCoin.toString();
+                }));
       });
       print("$_sigmaCoin this is simga coin");
     });
@@ -55,10 +56,7 @@ class _ProfessorDashboardState extends ProfessorFunctions {
       ),
       body: Container(
         alignment: Alignment.center,
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.95,
+        width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -84,20 +82,18 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                           if (snapshot.hasData) {
                             return ProfessorDetail(
                               id: _staffId,
-                              name: "${snapshot.data?.first_name} ${snapshot
-                                  .data?.last_name}",
+                              name:
+                                  "${snapshot.data?.first_name} ${snapshot.data?.last_name}",
                               email: snapshot.data?.bennett_email ?? "",
-                              department: snapshot.data?.department_code ??
-                                  "error",
+                              department:
+                                  snapshot.data?.department_code ?? "error",
                               coin: _sigmaCoin,
                             );
-                          }
-                          else if (snapshot.hasError){
-                            print("${snapshot.error} this is error" );
+                          } else if (snapshot.hasError) {
+                            print("${snapshot.error} this is error");
                             return Text("error");
-
                           }
-                          return CircularProgressIndicator();
+                          return Center(child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -121,33 +117,61 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                     buttonText: 'Add Coins via Excel')
               ],
             ),
-            const SizedBox(height: 20,),
-            Text('Allot Coins to individual student', style: kLightTextStyle,),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Allot Coins to individual student',
+              style: kLightTextStyle,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: _enrollEnteredController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: primaryColor,
                 hintText: 'Search A Student',
-                hintStyle: kDarkTextStyle.copyWith(fontSize: 14,),
-                prefixIcon: const Icon(Icons.person, color: kDarkPrimaryColor,),
+                hintStyle: kDarkTextStyle.copyWith(
+                  fontSize: 14,
+                ),
+                prefixIcon: const Icon(
+                  Icons.person,
+                  color: kDarkPrimaryColor,
+                ),
                 focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 0,),
-                  borderRadius: BorderRadius.all(Radius.circular(20),
-                  ),),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)
+                  borderSide: BorderSide(
+                    width: 0,
                   ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SearchStudentView())).then((value){initState();} );
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(
+                        builder: (context) => SearchStudentView()))
+                    .then((value) {
+                  initState();
+                });
               },
             ),
-            Text('Sigma transaction History', style: kLightTextStyle,),
-            Expanded(child: TransactionList(id: _staffId,coin: "sigma",time_period: "week",userType: "sender_id",)),
+            Text(
+              'Sigma transaction History',
+              style: kLightTextStyle,
+            ),
+            Expanded(
+                child: TransactionList(
+              id: _staffId,
+              coin: "sigma",
+              time_period: "week",
+              userType: "sender_id",
+            )),
           ],
         ),
       ),
@@ -161,86 +185,91 @@ class ProfessorDetail extends StatelessWidget {
   String email;
   String department;
   String coin;
-  ProfessorDetail({
-    Key? key,
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.department,
-    required this.coin
-  }) : super(key: key);
+  ProfessorDetail(
+      {Key? key,
+      required this.id,
+      required this.name,
+      required this.email,
+      required this.department,
+      required this.coin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-      CircleAvatar(
-      backgroundColor: kNeutralColor,
-      radius: 60,
-    ),
-    const SizedBox(width: 10),
-    Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text(
-    name,
-    style: kDarkTextStyle,
-    ),
-    Text(
-    email,
-    style: kDarkTextStyle.copyWith(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    ),
-    ),
-    Text(
-    "Department $department",
-    style: kDarkTextStyle.copyWith(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    ),
-    ),
-    const SizedBox(
-    height: 10,
-    ),
-    Row(
-    children: [
-    Text(
-    "Sigma Coins: $coin",
-    style: kDarkTextStyle.copyWith(
-    fontWeight: FontWeight.w500,
-    fontSize: 16),
-    ),
-    const SizedBox(
-    width: 10,
-    ),
-    Container(
-    padding: const EdgeInsets.symmetric(
-    vertical: 5, horizontal: 10),
-    decoration: BoxDecoration(
-    color: kNeutralColor,
-    borderRadius: const BorderRadius.all(
-    Radius.circular(10)),
-    ),
-    child: Row(
-    children: [
-    Image.asset(
-    'assets/sigmaCoin.png',
-    width: 20,
-    height: 20,
-    ),
-    const SizedBox(
-    width: 10,
-    ),
-    ],
-    ),
-    ),
-    ],
-    ),
-    ],
-    )
-    ]
-    ,
+        CircleAvatar(
+          backgroundColor: kNeutralColor,
+          radius: 60,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: kDarkTextStyle,
+            ),
+            Text(
+              email,
+              style: kDarkTextStyle.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              "Department $department",
+              style: kDarkTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Sigma Coins: ",
+              style: kDarkTextStyle.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: kNeutralColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/sigmaCoin.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "$coin",
+                        style: kDarkTextStyle.copyWith(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
     );
   }
 }

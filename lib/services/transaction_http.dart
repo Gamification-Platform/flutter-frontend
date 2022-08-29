@@ -58,7 +58,7 @@ class TransactionHttp{
       "receiver_id":receiverId,
       "amount":amount.toString(),
     });
-    print("$encode this is the encode ddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+    print("$encode this is the encode ddd");
     var response = await http.post(url,headers: {
       // 'Content-Type': 'application/text; charset=UTF-8',
       // HttpHeaders.contentTypeHeader:"application/json",
@@ -72,7 +72,7 @@ class TransactionHttp{
     );
     print("url");
     if (response.statusCode == 200){
-      print("this is responsessssssssssssssssssssssssss transactionnnnnnnnnn   ${response.body}");
+      print("this is responsesss transactionnnn  ${response.body}");
       return TransactionDetail.fromMap(jsonDecode(response.body));
     }
     else {
