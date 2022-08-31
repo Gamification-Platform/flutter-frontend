@@ -180,30 +180,38 @@ class TransactionList extends StatelessWidget {
               itemCount: snapshot.data?.length,
                 itemBuilder:(context,index){
                     TransactionDetail transactionDetail=transactions[index];
-                    return TransactionItem(
-                        id: transactionDetail.id,
-                        senderId: transactionDetail.senderId,
-                        amount: transactionDetail.amount,
-                        dateTime: transactionDetail.currentTimestamp
-                    );
+                      return ReceiveTransactionItem(
+
+                          id: transactionDetail.id,
+                          userType:userType,
+                          senderId: transactionDetail.senderId,
+                          amount: transactionDetail.amount,
+                          dateTime: transactionDetail.currentTimestamp,
+                          receiverId:transactionDetail.receiverId
+                      );
+
                 }
             );
         }
     );
   }
 }
-class TransactionItem extends StatelessWidget {
+class ReceiveTransactionItem extends StatelessWidget {
   int id;
   String senderId;
   int amount;
   String dateTime;
-   TransactionItem(
+  String userType;
+  String receiverId;
+   ReceiveTransactionItem(
       {
         Key? key,
         required this.id,
+        required this.userType,
         required this.senderId,
         required this.amount,
-        required this.dateTime
+        required this.dateTime,
+        required this.receiverId
       }
       ) : super(key: key);
 
@@ -212,6 +220,29 @@ class TransactionItem extends StatelessWidget {
     String getDateStringInFormat(String date){
       DateTime dateTime=DateTime.parse(date);
       return "${dateTime.day}/${dateTime.month}/${dateTime.year} at ${dateTime.hour}:${dateTime.minute}";
+    }
+    List<Widget> getTransactionCard(){
+      if(userType=="receiver_id"){
+        return [
+          Text('''Received $amount from''',
+            style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+          const SizedBox(height: 5,),
+          Text('''$senderId''',
+            style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+          const SizedBox(height: 5,),
+          Text("At ${getDateStringInFormat(dateTime)} with id $id",style: kLightTextStyle.copyWith(fontSize: 14,fontWeight: FontWeight.w300),),
+        ];
+      }
+      return  [
+        Text('''Sent  $amount to''',
+          style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+        const SizedBox(height: 5,),
+        Text('''$receiverId''',
+          style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
+        const SizedBox(height: 5,),
+        Text("At ${getDateStringInFormat(dateTime)} with id $id",style: kLightTextStyle.copyWith(fontSize: 14,fontWeight: FontWeight.w300),),
+      ];
+
     }
     return  Container(
       padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -223,20 +254,13 @@ class TransactionItem extends StatelessWidget {
       ),
       child: Row(
         children: [
+
           Icon(Icons.payment,color: primaryColor,),
           const SizedBox(width: 20,),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('''Received $amount from''',
-                style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
-              const SizedBox(height: 5,),
-              Text('''$senderId''',
-                style: kLightTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 16),),
-              const SizedBox(height: 5,),
-              Text("At ${getDateStringInFormat(dateTime)} with id $id",style: kLightTextStyle.copyWith(fontSize: 14,fontWeight: FontWeight.w300),),
-            ],
+            children:getTransactionCard(),
           ),
           const SizedBox(width: 20),
 
