@@ -1,18 +1,15 @@
-import 'package:BUPLAY/Screens/SearchStudentView.dart';
-import 'package:BUPLAY/Screens/professorFunctions.dart';
-import 'package:BUPLAY/Screens/transaction_history_screen.dart';
-import 'package:BUPLAY/models/staffCoin_details.dart';
+import 'package:BUPLAY/Screens/Professor/SearchStudentView.dart';
+import 'package:BUPLAY/Screens/Professor/professorFunctions.dart';
+import 'package:BUPLAY/Screens/user/transaction_history_screen.dart';
 import 'package:BUPLAY/models/staff_details.dart';
 import 'package:BUPLAY/services/staffCoins_http.dart';
 import 'package:BUPLAY/services/staff_http.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/staffCoin_details.dart';
-import '../utils/Styles.dart';
-import '../utils/Widgets/Button.dart';
-import '../utils/colors.dart';
-import '../utils/global_variables.dart';
+import '../../utils/Styles.dart';
+import '../../utils/Widgets/Button.dart';
+import '../../utils/colors.dart';
+import '../../utils/global_variables.dart';
 
 class ProfessorDashboard extends StatefulWidget {
   const ProfessorDashboard({Key? key}) : super(key: key);

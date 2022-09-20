@@ -1,10 +1,10 @@
-import 'package:BUPLAY/Screens/Admin_Screen.dart';
+import 'package:BUPLAY/Screens/admin/Admin_Screen.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
+import '../../utils/colors.dart';
 
 abstract class AdminFunctions extends State<AdminScreen>{
 

@@ -1,7 +1,7 @@
-import 'package:BUPLAY/Screens/Home.dart';
-import 'package:BUPLAY/Screens/Profile_Screen.dart';
-import 'package:BUPLAY/Screens/leaderboardScreen.dart';
-import 'package:BUPLAY/Screens/transaction_history_screen.dart';
+import 'package:BUPLAY/Screens/user/Home.dart';
+import 'package:BUPLAY/Screens/user/Profile_Screen.dart';
+import 'package:BUPLAY/Screens/user/leaderboardScreen.dart';
+import 'package:BUPLAY/Screens/user/transaction_history_screen.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> homeScreenItems = [

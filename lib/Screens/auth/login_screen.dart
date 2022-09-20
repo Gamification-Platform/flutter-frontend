@@ -1,13 +1,13 @@
 import 'dart:developer';
 
-import 'package:BUPLAY/Screens/professorDashboard.dart';
+import 'package:BUPLAY/Screens/Professor/professorDashboard.dart';
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../services/auth_http.dart';
+import '../../services/auth_http.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

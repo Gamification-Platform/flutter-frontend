@@ -6,11 +6,11 @@ import 'package:BUPLAY/models/studentCoin_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/student_details.dart';
-import '../services/studentCoins_http.dart';
-import '../services/students_http.dart';
-import '../utils/Styles.dart';
-import '../utils/global_variables.dart';
+import '../../models/student_details.dart';
+import '../../services/studentCoins_http.dart';
+import '../../services/students_http.dart';
+import '../../utils/Styles.dart';
+import '../../utils/global_variables.dart';
 import 'Profile_Screen.dart';
 import 'package:http/http.dart' as http;
 

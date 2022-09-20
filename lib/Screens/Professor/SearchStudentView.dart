@@ -1,4 +1,4 @@
-import 'package:BUPLAY/Screens/professorDashboard.dart';
+import 'package:BUPLAY/Screens/Professor/professorDashboard.dart';
 import 'package:BUPLAY/models/student_details.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
@@ -6,11 +6,11 @@ import 'package:BUPLAY/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/transaction_detail.dart';
-import '../services/students_http.dart';
-import '../services/transaction_http.dart';
-import '../utils/colors.dart';
-import '../utils/global_variables.dart';
+import '../../models/transaction_detail.dart';
+import '../../services/students_http.dart';
+import '../../services/transaction_http.dart';
+import '../../utils/colors.dart';
+import '../../utils/global_variables.dart';
 
 class SearchStudentView extends StatefulWidget {
   const SearchStudentView({Key? key}) : super(key: key);

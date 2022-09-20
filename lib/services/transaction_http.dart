@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:BUPLAY/Screens/transaction_history_screen.dart';
+import 'package:BUPLAY/Screens/user/transaction_history_screen.dart';
 import 'package:BUPLAY/models/transaction_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

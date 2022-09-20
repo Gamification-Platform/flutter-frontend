@@ -1,4 +1,4 @@
-import 'package:BUPLAY/Screens/AdminFunctions.dart';
+import 'package:BUPLAY/Screens/admin/AdminFunctions.dart';
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
 import 'package:BUPLAY/utils/colors.dart';

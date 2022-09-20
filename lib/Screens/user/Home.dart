@@ -7,10 +7,10 @@ import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/studentCoin_details.dart';
-import '../services/studentCoins_http.dart';
-import '../utils/XP_bar.dart';
-import '../utils/colors.dart';
+import '../../models/studentCoin_details.dart';
+import '../../services/studentCoins_http.dart';
+import '../../utils/XP_bar.dart';
+import '../../utils/colors.dart';
 import 'Profile_Screen.dart';
 
 class HomeScreen extends StatefulWidget {

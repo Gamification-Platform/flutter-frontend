@@ -1,5 +1,5 @@
-import 'package:BUPLAY/Screens/EditProfile.dart';
-import 'package:BUPLAY/Screens/profileFunctions.dart';
+import 'package:BUPLAY/Screens/user/EditProfile.dart';
+import 'package:BUPLAY/Screens/user/profileFunctions.dart';
 import 'package:BUPLAY/models/studentCoin_details.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:BUPLAY/utils/XP_bar.dart';
@@ -8,11 +8,11 @@ import 'package:BUPLAY/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/student_details.dart';
-import '../services/studentCoins_http.dart';
-import '../services/students_http.dart';
-import '../utils/Styles.dart';
-import '../utils/global_variables.dart';
+import '../../models/student_details.dart';
+import '../../services/studentCoins_http.dart';
+import '../../services/students_http.dart';
+import '../../utils/Styles.dart';
+import '../../utils/global_variables.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -47,11 +47,15 @@ showDialogBox2(BuildContext context) {
 class _ProfilePageState extends ProfileFunctions {
   String _studentId = "";
 
+  // getData() async {
+  //  <StudentDetails> userSnap = await StudentsHttpService.getStudentById(_studentId);
+  // }
   initState() {
     print("this is  in init state from profile page");
     SharedPreferences.getInstance().then((prefs) {
       print("this is in init state with pref");
       setStudentId(prefs.getString(PREFERENCE_STUDENT_EMAIL));
+
     });
 
     super.initState();

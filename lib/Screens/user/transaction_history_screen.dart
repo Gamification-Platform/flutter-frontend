@@ -7,8 +7,8 @@ import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utils/colors.dart';
-import '../utils/global_variables.dart';
+import '../../utils/colors.dart';
+import '../../utils/global_variables.dart';
 
 class TransactionHistoryScreen extends StatefulWidget {
   const TransactionHistoryScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class TransactionHistoryScreen extends StatefulWidget {
 class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
   String _id="";
   String _coin="alpha";
-  String _time_period="";
+  String _time_period="week";
   bool _latest=false;
   int selected =0;
   @override
