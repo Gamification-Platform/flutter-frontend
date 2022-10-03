@@ -1,5 +1,5 @@
+import 'package:BUPLAY/Screens/user/request_coins.dart';
 import 'package:flutter/material.dart';
-
 import '../../utils/Styles.dart';
 import '../../utils/colors.dart';
 
@@ -40,9 +40,15 @@ class _EarnCoinsDashBoardState extends State<EarnCoinsDashBoard> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              FieldBox(label: 'Request Coins from mentor', onChanged: (){}),
+              FieldBox(
+                  label: 'Request Coins from mentor',
+                  onChanged: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const RequestCoins()))),
               SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-              Text('More Coming Soon....', style: kLightTextStyle.copyWith(fontSize: 20),),
+              Text(
+                'More Coming Soon....',
+                style: kLightTextStyle.copyWith(fontSize: 20),
+              ),
             ],
           ),
         ),
