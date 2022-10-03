@@ -5,7 +5,6 @@ import 'package:BUPLAY/utils/Widgets/Button.dart';
 import 'package:BUPLAY/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../models/transaction_detail.dart';
 import '../../services/students_http.dart';
 import '../../services/transaction_http.dart';
@@ -139,7 +138,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                 print(snapshot.error);
                 return Text(snapshot.error.toString());
               }
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
               //Center(child: CircularProgressIndicator());
             },
           ),
@@ -199,6 +198,7 @@ class _SearchStudentViewState extends State<SearchStudentView> {
                   fillColor: primaryColor,
                   hintText: 'e21cseu0246',
                   hintStyle: kDarkTextStyle.copyWith(
+                    color: Colors.grey,
                     fontSize: 14,
                   ),
                   prefixIcon: const Icon(

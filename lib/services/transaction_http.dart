@@ -17,6 +17,7 @@ class TransactionHttp{
       queryParameters: {
         user:id.toString(),
         'latest':latest?"true":"false",
+
         "time_period":timePeriod,
       }
     );

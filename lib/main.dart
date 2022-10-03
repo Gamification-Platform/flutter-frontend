@@ -1,4 +1,5 @@
 import 'package:BUPLAY/Screens/admin/Admin_Screen.dart';
+import 'package:BUPLAY/Screens/mentor/mentor_dashboard.dart';
 import 'package:BUPLAY/Screens/user/EditProfile.dart';
 import 'package:BUPLAY/Screens/user/Home.dart';
 import 'package:BUPLAY/Screens/auth/login_screen.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
     ),
     home: //MobileScreenLayout()
       //ProfessorDashboard()
-       LoginScreen()
-      //LoginScreen()
+       //MentorDashboard()
+      LoginScreen()
     );
   }
 }

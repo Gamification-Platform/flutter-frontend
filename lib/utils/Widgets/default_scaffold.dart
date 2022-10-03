@@ -1,3 +1,4 @@
+import 'package:BUPLAY/Screens/user/earn_coins.dart';
 import 'package:flutter/material.dart';
 
 import '../colors.dart';
@@ -25,10 +26,11 @@ class DefaultScaffold extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.settings,
+              Icons.add_card_rounded,
               color: kDarkPrimaryColor,
             ),
-            onPressed: () {},
+            onPressed:()=> Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => EarnCoinsDashBoard())),
           ),
         ],
       ),
