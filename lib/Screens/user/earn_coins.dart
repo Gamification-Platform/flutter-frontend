@@ -1,3 +1,4 @@
+import 'package:BUPLAY/Screens/user/request_coins.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/Styles.dart';
@@ -40,9 +41,16 @@ class _EarnCoinsDashBoardState extends State<EarnCoinsDashBoard> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              FieldBox(label: 'Request Coins from mentor', onChanged: (){}),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-              Text('More Coming Soon....', style: kLightTextStyle.copyWith(fontSize: 20),),
+              FieldBox(
+                  label: 'Request Coins from mentor',
+                  onTap: ()=>Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) =>  RequestCoins()))
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              Text(
+                'More Coming Soon....',
+                style: kLightTextStyle.copyWith(fontSize: 20),
+              ),
             ],
           ),
         ),
@@ -52,18 +60,18 @@ class _EarnCoinsDashBoardState extends State<EarnCoinsDashBoard> {
 }
 
 class FieldBox extends StatelessWidget {
-  Function onChanged;
+  Function onTap = () {};
   final String label;
   FieldBox({
     Key? key,
     required this.label,
-    required this.onChanged,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(),
+      onTap:  onTap as void Function()?,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width * 0.9,
