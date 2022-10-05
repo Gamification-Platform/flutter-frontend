@@ -1,5 +1,6 @@
 import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/Button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/Widgets/test_feild_input.dart';
@@ -15,6 +16,7 @@ class RequestCoins extends StatefulWidget {
 class _RequestCoinsState extends State<RequestCoins> {
   int selected = 0;
   String _text = "Academic";
+  var excelPicked = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +61,15 @@ class _RequestCoinsState extends State<RequestCoins> {
                 height: 20,
               ),
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: TextFieldInput(
-                    textEditingController: TextEditingController(),
-                    hintText: '  Enter your request',
-                    textInputType: TextInputType.text,
-                    expand: true,
-                  )),
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextFieldInput(
+                  textEditingController: TextEditingController(),
+                  hintText: '  Enter your request',
+                  textInputType: TextInputType.text,
+                  expand: true,
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -79,13 +82,38 @@ class _RequestCoinsState extends State<RequestCoins> {
                 height: 10,
               ),
               BasicButtonWithIcon(
-                onPress: () {},
+                onPress: () async {
+                  final excelPicker = await FilePicker.platform.pickFiles();
+                  if (excelPicker == null) return;
+                  excelPicked = excelPicker.files.first;
+                },
                 buttonText: 'Select',
                 vPadding: 12,
                 hPadding: 16,
                 width: MediaQuery.of(context).size.width * 0.4,
-                icon: const Icon(Icons.upload_file,color: primaryColor,),
-              )
+                icon: const Icon(
+                  Icons.upload_file,
+                  color: primaryColor,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'File Name: ${excelPicked == null ? 'No File Chosen' : excelPicked.name}',
+                style: kDarkTextStyle.copyWith(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              Flexible(flex: 1,child: Container(),),
+              BasicButton(
+                buttonText: 'Submit',
+                onPress: () {},
+                vPadding: 12,
+                hPadding: 20,
+              ),
+              const SizedBox(height: 50),
             ],
           ),
         ),

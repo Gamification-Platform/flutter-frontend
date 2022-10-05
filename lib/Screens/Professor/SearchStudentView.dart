@@ -261,7 +261,7 @@ class ConfirmationBox extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 10,),
-            Icon(Icons.compare_arrows,size: 50,color: kDarkPrimaryColor,),
+            const Icon(Icons.compare_arrows,size: 50,color: kDarkPrimaryColor,),
             const SizedBox(height: 10,),
             Text(
               title,
@@ -282,7 +282,7 @@ class ConfirmationBox extends StatelessWidget {
                       ),
                     ));
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProfessorDashboard()));
+                        builder: (context) => const ProfessorDashboard()));
                   }
                   else{
                     showSnackBar(context, 'There is Some error Transaction was not successful');

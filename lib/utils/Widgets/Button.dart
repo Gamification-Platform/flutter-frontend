@@ -77,7 +77,7 @@ class BasicButtonWithIcon extends StatelessWidget {
               Text(
                 buttonText,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               icon
             ],
           ),

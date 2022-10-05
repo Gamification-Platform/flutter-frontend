@@ -1,8 +1,6 @@
 import 'package:BUPLAY/Screens/Professor/professorDashboard.dart';
-import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/Styles.dart';
 import '../../utils/Widgets/Button.dart';

@@ -88,9 +88,9 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                             );
                           } else if (snapshot.hasError) {
                             print("${snapshot.error} this is error");
-                            return Text("error");
+                            return const Text("error");
                           }
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -152,7 +152,7 @@ class _ProfessorDashboardState extends ProfessorFunctions {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacement(MaterialPageRoute(
-                        builder: (context) => SearchStudentView()))
+                        builder: (context) => const SearchStudentView()))
                     .then((value) {
                   initState();
                 });
