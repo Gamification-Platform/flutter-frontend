@@ -1,4 +1,5 @@
 import 'package:BUPLAY/Screens/Professor/SearchStudentView.dart';
+import 'package:BUPLAY/Screens/Professor/mentor_requests.dart';
 import 'package:BUPLAY/Screens/Professor/professorFunctions.dart';
 import 'package:BUPLAY/Screens/user/transaction_history_screen.dart';
 import 'package:BUPLAY/models/staff_details.dart';
@@ -50,12 +51,28 @@ class _ProfessorDashboardState extends ProfessorFunctions {
           'Professor Dashboard',
           style: kDarkTextStyle,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.notifications,
+              color: kDarkPrimaryColor,
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const MentorPendingRequests(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
             Container(
@@ -90,7 +107,8 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                             print("${snapshot.error} this is error");
                             return const Text("error");
                           }
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         },
                       ),
                     ),
@@ -98,77 +116,109 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Add Coins Based on Quiz results',
-                  style: kLightTextStyle,
-                ),
-                const SizedBox(height: 20),
-                BasicButton(
-                    onPress: () => addNewDialog(context),
-                    buttonText: 'Add Coins via Excel')
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Allot Coins to individual student',
-              style: kLightTextStyle,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: _enrollEnteredController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: primaryColor,
-                hintText: 'Search A Student',
-                hintStyle: kDarkTextStyle.copyWith(
-                  fontSize: 14,
-                ),
-                prefixIcon: const Icon(
-                  Icons.person,
-                  color: kDarkPrimaryColor,
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 0,
+
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                    onTap: () => addNewDialog(context),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.17,
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.upload,
+                              color: kDarkPrimaryColor,
+                              size: 50,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Add Coins Based On Quiz results(Upload Excel Sheet)',
+                              textAlign: TextAlign.center,
+                              style: kDarkTextStyle.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
+                  const SizedBox(
+                    width: 10,
                   ),
-                ),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacement(MaterialPageRoute(
+                            builder: (context) =>
+                            const SearchStudentView()))
+                            .then((value) {
+                          initState();
+                        });
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.17,
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.search,
+                              color: kDarkPrimaryColor,
+                              size: 50,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Allot Coins to Individual Students (search students)',
+                              textAlign: TextAlign.center,
+                              style: kDarkTextStyle.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(
-                        builder: (context) => const SearchStudentView()))
-                    .then((value) {
-                  initState();
-                });
-              },
             ),
+            const SizedBox(height: 10,),
             Text(
               'Sigma transaction History',
               style: kLightTextStyle,
             ),
+            const SizedBox(height: 10,),
             Expanded(
                 child: TransactionList(
               id: _staffId,
               coin: "sigma",
               time_period: "week",
               userType: "sender_id",
-            )),
+            ),
+            ),
           ],
         ),
       ),
