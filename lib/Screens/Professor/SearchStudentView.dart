@@ -20,6 +20,7 @@ class SearchStudentView extends StatefulWidget {
 
 class _SearchStudentViewState extends State<SearchStudentView> {
   String _staffId = "";
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -287,6 +288,7 @@ class ConfirmationBox extends StatelessWidget {
                   else{
                     showSnackBar(context, 'There is Some error Transaction was not successful');
                   }
+
                 },
                 buttonText: "Send")
           ],

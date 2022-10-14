@@ -8,7 +8,6 @@ import 'package:BUPLAY/services/staff_http.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/Styles.dart';
-import '../../utils/Widgets/Button.dart';
 import '../../utils/colors.dart';
 import '../../utils/global_variables.dart';
 
@@ -68,7 +67,7 @@ class _ProfessorDashboardState extends ProfessorFunctions {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
@@ -85,10 +84,10 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: FutureBuilder<StaffDetails>(
                         future: StaffDetailsHttp.getStaffDetail(_staffId),
@@ -150,7 +149,7 @@ class _ProfessorDashboardState extends ProfessorFunctions {
                               textAlign: TextAlign.center,
                               style: kDarkTextStyle.copyWith(
                                   fontSize: 14, fontWeight: FontWeight.w400),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -257,6 +256,9 @@ class ProfessorDetail extends StatelessWidget {
               name,
               style: kDarkTextStyle,
             ),
+            const SizedBox(
+              height: 2,
+            ),
             Text(
               email,
               style: kDarkTextStyle.copyWith(
@@ -264,23 +266,26 @@ class ProfessorDetail extends StatelessWidget {
                 fontWeight: FontWeight.w300,
               ),
             ),
+            const SizedBox(
+              height: 2,
+            ),
             Text(
-              "Department $department",
+              "Department: $department",
               style: kDarkTextStyle.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 2,
             ),
             Text(
-              "Sigma Coins: ",
+              "Sigma Coins",
               style: kDarkTextStyle.copyWith(
                   fontWeight: FontWeight.w500, fontSize: 16),
             ),
             const SizedBox(
-              width: 10,
+              height: 5,
             ),
             Row(
               children: [
