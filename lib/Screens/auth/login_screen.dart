@@ -1,8 +1,11 @@
 import 'dart:developer';
 
 import 'package:BUPLAY/Screens/Professor/professorDashboard.dart';
+import 'package:BUPLAY/Screens/auth/signup_screen.dart';
 import 'package:BUPLAY/responsive/mobile_screen_layout.dart';
+import 'package:BUPLAY/utils/Styles.dart';
 import 'package:BUPLAY/utils/Widgets/default_scaffold.dart';
+import 'package:BUPLAY/utils/colors.dart';
 import 'package:BUPLAY/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(context,
             MaterialPageRoute(builder: (context) => (const ProfessorDashboard())));
     }
-    return DefaultScaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login',style: kDarkTextStyle,),
+        backgroundColor: primaryColor,
+      ),
       body:Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
@@ -116,11 +123,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           log("$e");
                       }
                     },
-                  )
+                  ),
               ),
-
+              Container(
+                height: 200,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                  );
+                },
+                child:  Text(
+                  'Create an account',
+                  style: kLightTextStyle,
+                 textAlign: TextAlign.center,
+                ),
+              )
             ],
-          )),
+          ),
+      ),
     );
   }
 }

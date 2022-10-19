@@ -1,4 +1,5 @@
 import 'package:BUPLAY/Screens/auth/login_screen.dart';
+import 'package:BUPLAY/Screens/auth/signup_screen.dart';
 import 'package:BUPLAY/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     home: //MobileScreenLayout()
       //ProfessorDashboard()
        //MentorDashboard()
-      LoginScreen()
+      SignUpScreen()
     );
   }
 }
